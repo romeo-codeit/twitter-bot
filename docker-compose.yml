@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000" # Expose backend on host port 5001, container port 5000
+    volumes:
+      # Mount the instance folder to persist the SQLite database across container restarts
+      - ./backend/instance:/app/instance
+    env_file:
+      # Load environment variables from a .env file located in the backend directory
+      - ./backend/.env
+    # The backend service will be available at http://backend:5000 within the Docker network
+    container_name: auto-tweet-backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Expose frontend on host port 3000, container port 80
+    depends_on:
+      - backend
+    container_name: auto-tweet-frontend
+
+# The default network created by Docker Compose allows the containers to communicate
+# with each other using their service names as hostnames (e.g., http://backend:5000).

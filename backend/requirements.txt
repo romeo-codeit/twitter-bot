@@ -1,0 +1,15 @@
+# Core bot dependencies
+tweepy
+python-dotenv
+requests
+
+# Flask and web server dependencies
+Flask
+Flask-Login
+Flask-Cors
+APScheduler
+gunicorn
+
+# Database and encryption
+SQLAlchemy
+cryptography

@@ -1,54 +1,62 @@
-# Twitter Bot
+# Swifter - The Smart Twitter/X Automation Tool
 
-This is a Twitter bot that automatically posts unique, engaging content multiple times per day.
+Swifter is a full-stack web application that helps you automate your Twitter/X presence. It features a beautiful, modern dashboard where you can connect your Twitter account, manage a queue of content, set a custom posting schedule, and more.
+
+This project is designed to be easy to set up and run using Docker.
+
+## Quick Start (Docker)
+
+Get up and running in 3 simple steps:
+
+1.  **Set up your environment file.**
+    - In the `backend` folder, copy `.env.example` to a new file named `.env`.
+    - Open `.env` and add your secret keys. You can generate a `FERNET_KEY` with:
+      ```bash
+      python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+      ```
+
+2.  **Build and run the app.**
+    - From the project's root directory, run:
+      ```bash
+      docker-compose up --build
+      ```
+
+3.  **Log in and start tweeting!**
+    - Open your browser to `http://localhost:3000`.
+    - Create an account, log in, and connect your Twitter account in the dashboard.
+
+---
 
 ## Features
 
-- Posts automatically multiple times per day.
-- Each post is unique.
-- Content is focused on the tech niche.
-- Mix of short tweets and tweet threads.
-- Auto-generates or fetches relevant images.
-- 100% free to run.
+-   **User Authentication**: Secure login and registration.
+-   **Modern Dashboard**: A clean, beautiful UI to manage your bot's settings.
+-   **Secure Twitter/X Integration**: Connect your Twitter API keys, which are stored securely using strong encryption.
+-   **Content Queues**: A full CRUD interface for the content you want the bot to post.
+-   **Flexible Scheduling**: An easy-to-use interface to set multiple posting times per day.
+-   **Persistent & Dynamic Scheduling**: Uses APScheduler with a database backend to ensure your scheduled jobs are not lost on restart.
 
-## Setup
+## Manual Local Setup (Without Docker)
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
+If you prefer not to use Docker, you can run the application manually.
 
-2.  **Install the dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+### Prerequisites
 
-3.  **Set up your environment variables:**
-    -   Create a `.env` file in the root of the project.
-    -   Copy the contents of `.env.example` into `.env`.
-    -   Fill in the values for the environment variables:
-        -   `TWITTER_API_KEY`: Your Twitter API key.
-        -   `TWITTER_API_SECRET_KEY`: Your Twitter API secret key.
-        -   `TWITTER_ACCESS_TOKEN`: Your Twitter access token.
-        -   `TWITTER_ACCESS_TOKEN_SECRET`: Your Twitter access token secret.
-        -   `UNSPLASH_ACCESS_KEY`: Your Unsplash API key.
+-   Node.js and npm
+-   Python 3.11+ and pip
 
-4.  **Run the bot:**
-    ```bash
-    python main.py
-    ```
+### Setup
 
-## How to get the API keys
+1.  **Clone the repository and set up the `.env` file** as described in step 1 of the Quick Start guide.
 
-### Twitter
+2.  **Backend Setup:**
+    -   `cd backend`
+    -   `pip install -r requirements.txt`
+    -   `python -m flask init-db` (Note: This requires `FLASK_APP=backend` to be set as an environment variable or for you to use a `.flaskenv` file).
+    -   `python -m flask run --port 5001`
 
-1.  Apply for a Twitter Developer account [here](https://developer.twitter.com/).
-2.  Create a new project and an app.
-3.  Generate your API key, API secret key, access token, and access token secret.
-
-### Unsplash
-
-1.  Create an account on [Unsplash](https://unsplash.com/).
-2.  Go to your applications page and create a new application.
-3.  Your API key will be available on the application page.
+3.  **Frontend Setup:**
+    -   `cd frontend`
+    -   `npm install`
+    -   `npm run dev`
+    -   The frontend will be available at the address provided by Vite (usually `http://localhost:5173`).
